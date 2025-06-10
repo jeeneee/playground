@@ -7,8 +7,6 @@ services:
     command: --replSet configReplSet --configsvr --port 27017
     volumes:
       - ${HOME}/playground/mongo/data/configdb:/data/configdb
-    ports:
-      - "27016:27017"
 
   mongo-shard1-1:
     image: mongo:7.0.15
@@ -16,8 +14,6 @@ services:
     command: --replSet shard1ReplSet --shardsvr --port 27017
     volumes:
       - ${HOME}/playground/mongo/data/shard1-1:/data/db
-    ports:
-      - "27011:27017"
 
   mongo-shard1-2:
     image: mongo:7.0.15
@@ -25,8 +21,6 @@ services:
     command: --replSet shard1ReplSet --shardsvr --port 27017
     volumes:
       - ${HOME}/playground/mongo/data/shard1-2:/data/db
-    ports:
-      - "27012:27017"
 
   mongo-shard1-3:
     image: mongo:7.0.15
@@ -34,8 +28,6 @@ services:
     command: --replSet shard1ReplSet --shardsvr --port 27017
     volumes:
       - ${HOME}/playground/mongo/data/shard1-3:/data/db
-    ports:
-      - "27013:27017"
 
   mongo-shard2-1:
     image: mongo:7.0.15
@@ -43,8 +35,6 @@ services:
     command: --replSet shard2ReplSet --shardsvr --port 27017
     volumes:
       - ${HOME}/playground/mongo/data/shard2-1:/data/db
-    ports:
-      - "27021:27017"
 
   mongo-shard2-2:
     image: mongo:7.0.15
@@ -52,8 +42,6 @@ services:
     command: --replSet shard2ReplSet --shardsvr --port 27017
     volumes:
       - ${HOME}/playground/mongo/data/shard2-2:/data/db
-    ports:
-      - "27022:27017"
 
   mongo-shard2-3:
     image: mongo:7.0.15
@@ -61,8 +49,6 @@ services:
     command: --replSet shard2ReplSet --shardsvr --port 27017
     volumes:
       - ${HOME}/playground/mongo/data/shard2-3:/data/db
-    ports:
-      - "27023:27017"
 
   mongo-mongos:
     image: mongo:7.0.15
