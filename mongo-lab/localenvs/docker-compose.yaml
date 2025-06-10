@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  mongo-configsvr1:
+    image: mongo:7.0.15
+    container_name: mongo-configsvr1
+    command: --replSet configReplSet --configsvr --port 27017
+    volumes:
+      - ${HOME}/playground/mongo/data/configdb:/data/configdb
+    ports:
+      - "27016:27017"
+
+  mongo-shard1-1:
+    image: mongo:7.0.15
+    container_name: mongo-shard1-1
+    command: --replSet shard1ReplSet --shardsvr --port 27017
+    volumes:
+      - ${HOME}/playground/mongo/data/shard1-1:/data/db
+    ports:
+      - "27011:27017"
+
+  mongo-shard1-2:
+    image: mongo:7.0.15
+    container_name: mongo-shard1-2
+    command: --replSet shard1ReplSet --shardsvr --port 27017
+    volumes:
+      - ${HOME}/playground/mongo/data/shard1-2:/data/db
+    ports:
+      - "27012:27017"
+
+  mongo-shard1-3:
+    image: mongo:7.0.15
+    container_name: mongo-shard1-3
+    command: --replSet shard1ReplSet --shardsvr --port 27017
+    volumes:
+      - ${HOME}/playground/mongo/data/shard1-3:/data/db
+    ports:
+      - "27013:27017"
+
+  mongo-shard2-1:
+    image: mongo:7.0.15
+    container_name: mongo-shard2-1
+    command: --replSet shard2ReplSet --shardsvr --port 27017
+    volumes:
+      - ${HOME}/playground/mongo/data/shard2-1:/data/db
+    ports:
+      - "27021:27017"
+
+  mongo-shard2-2:
+    image: mongo:7.0.15
+    container_name: mongo-shard2-2
+    command: --replSet shard2ReplSet --shardsvr --port 27017
+    volumes:
+      - ${HOME}/playground/mongo/data/shard2-2:/data/db
+    ports:
+      - "27022:27017"
+
+  mongo-shard2-3:
+    image: mongo:7.0.15
+    container_name: mongo-shard2-3
+    command: --replSet shard2ReplSet --shardsvr --port 27017
+    volumes:
+      - ${HOME}/playground/mongo/data/shard2-3:/data/db
+    ports:
+      - "27023:27017"
+
+  mongo-mongos:
+    image: mongo:7.0.15
+    container_name: mongo-mongos
+    entrypoint: [ "bash", "/init.sh" ]
+    volumes:
+      - ./mongo/init.sh:/init.sh
+      - ./mongo/scripts:/scripts
+    ports:
+      - "27017:27017"
+    depends_on:
+      - mongo-configsvr1
+      - mongo-shard1-1
+      - mongo-shard1-2
+      - mongo-shard1-3
+      - mongo-shard2-1
+      - mongo-shard2-2
+      - mongo-shard2-3

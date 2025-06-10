@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: mongo-lab
+  data:
+    mongodb:
+      uri: mongodb://localhost
+      database:
