@@ -1,16 +1,16 @@
 const chat = db.getSiblingDB("chat");
 
-chat.createCollection("conversation");
-chat.createCollection("message");
+chat.createCollection("conversations");
+chat.createCollection("messages");
 
-chat.message.createIndex({ conversationId: "hashed", _id: 1 }, { name: "ix_shardkey" });
+chat.messages.createIndex({ conversationId: "hashed", _id: 1 }, { name: "ix_shardkey" });
 
 const admin = db.getSiblingDB("admin");
 
 try {
     admin.runCommand({ enableSharding: "chat" });
     admin.runCommand({
-        shardCollection: "chat.message",
+        shardCollection: "chat.messages",
         key: { conversationId: "hashed", _id: 1 }
     });
     print("✅ Sharding enabled and shard key applied");
